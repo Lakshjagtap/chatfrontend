@@ -1,9 +1,8 @@
-// script.js
-
 // DOM Elements
 const sendButton = document.getElementById('send-button');
 const messageInput = document.getElementById('message-input');
 const chatMessages = document.querySelector('.chat-messages');
+const loadingIndicator = document.getElementById('loading-indicator'); // Add this to your HTML
 
 // Backend URL (update with your Render URL)
 const API_URL = 'https://chatbackend-prex.onrender.com';
@@ -28,7 +27,12 @@ function sendMessage() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message }),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then((data) => {
       if (data.botResponse) {
         displayMessage(data.botResponse, 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
@@ -67,8 +71,16 @@ document.addEventListener('DOMContentLoaded', loadChatHistory);
 
 // Function to load chat history from backend
 function loadChatHistory() {
+  // Show the loading indicator while fetching
+  loadingIndicator.style.display = 'block';
+
   fetch(`${API_URL}/chats`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Failed to load chat history');
+      }
+      return response.json();
+    })
     .then((chats) => {
       chats.forEach((chat) => {
         const avatarUrl = chat.sender === 'user'
@@ -76,8 +88,15 @@ function loadChatHistory() {
           : 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png';
         displayMessage(chat.message, chat.sender, avatarUrl);
       });
+
+      // Hide the loading indicator after loading chat history
+      loadingIndicator.style.display = 'none';
     })
     .catch((error) => {
       console.error('Error loading chat history:', error);
+      displayMessage('Sorry, could not load previous chats.', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
+      
+      // Hide the loading indicator if an error occurs
+      loadingIndicator.style.display = 'none';
     });
 }
