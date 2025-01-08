@@ -6,7 +6,7 @@ const messageInput = document.getElementById('message-input');
 const chatMessages = document.querySelector('.chat-messages');
 
 // Backend URL (update with your Render URL)
-const API_URL = 'https://chatbackend-1-cnge.onrender.com';
+const API_URL = 'https://chatbackend-tgtb.onrender.com';
 
 // Event Listener for Sending Messages
 sendButton.addEventListener('click', sendMessage);
