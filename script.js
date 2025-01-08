@@ -6,7 +6,7 @@ const messageInput = document.getElementById('message-input');
 const chatMessages = document.querySelector('.chat-messages');
 
 // Backend URL (update with your Render URL)
-const API_URL = 'https://chatbackend-zey5.onrender.com';
+const API_URL = 'https://chatbackend-prex.onrender.com';
 
 // Event Listener for Sending Messages
 sendButton.addEventListener('click', sendMessage);
@@ -36,7 +36,7 @@ function sendMessage() {
     })
     .catch((error) => {
       console.error('Error:', error);
-      displayMessage('Sorry, something went wrong! Server is not responding', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
+      displayMessage('Sorry, something went wrong!', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
     });
 
   messageInput.value = '';
