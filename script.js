@@ -36,7 +36,7 @@ function sendMessage() {
     })
     .catch((error) => {
       console.error('Error:', error);
-      displayMessage('Sorry, something went wrong!', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
+      displayMessage('Sorry, something went wrong! Server is not responding', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
     });
 
   messageInput.value = '';
