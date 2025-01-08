@@ -20,7 +20,7 @@ function sendMessage() {
   }
 
   // Display the user's message
-  displayMessage(message, 'user', './images/useravatar.png');
+  displayMessage(message, 'user', 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png');
 
   // Send the message to the backend
   fetch(`${API_URL}/chat`, {
@@ -31,12 +31,12 @@ function sendMessage() {
     .then((response) => response.json())
     .then((data) => {
       if (data.botResponse) {
-        displayMessage(data.botResponse, 'bot', './images/avatar.png');
+        displayMessage(data.botResponse, 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
       }
     })
     .catch((error) => {
       console.error('Error:', error);
-      displayMessage('Sorry, something went wrong!', 'bot', './images/avatar.png');
+      displayMessage('Sorry, something went wrong!', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
     });
 
   messageInput.value = '';
@@ -71,7 +71,10 @@ function loadChatHistory() {
     .then((response) => response.json())
     .then((chats) => {
       chats.forEach((chat) => {
-        displayMessage(chat.message, chat.sender, chat.sender === 'user' ? './images/useravatar.png' : './images/avatar.png');
+        const avatarUrl = chat.sender === 'user'
+          ? 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png' 
+          : 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png';
+        displayMessage(chat.message, chat.sender, avatarUrl);
       });
     })
     .catch((error) => {
