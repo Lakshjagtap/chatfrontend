@@ -163,8 +163,8 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1px;
-    border-radius: 25%;
+    padding: 5px;
+    border-radius: 102%;
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
