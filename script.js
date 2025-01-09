@@ -9,7 +9,7 @@ const sendButton = document.getElementById('send-button');
 const loadingIndicator = document.getElementById('loading-indicator'); // Add this to your HTML
 
 // Backend URL (update with your Render URL)
-const API_URL = 'https://chatbackend-jg55.onrender.com';
+const API_URL = 'https://chatbackend-rvdq.onrender.com';
 
 // Toggle Emoji Picker Visibility
 let emojiPickerVisible = false;
