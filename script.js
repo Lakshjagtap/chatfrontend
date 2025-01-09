@@ -1,11 +1,77 @@
+// Emoji list for simplicity
+const emojis = ['😊', '😂', '😎', '😍', '🙄', '😭', '😢', '😡', '👍', '👏', '🙏', '🥺', '🤔', '💖'];
+
 // DOM Elements
-const sendButton = document.getElementById('send-button');
+const emojiButton = document.getElementById('emoji-button');
 const messageInput = document.getElementById('message-input');
 const chatMessages = document.querySelector('.chat-messages');
+const sendButton = document.getElementById('send-button');
 const loadingIndicator = document.getElementById('loading-indicator'); // Add this to your HTML
 
 // Backend URL (update with your Render URL)
 const API_URL = 'https://chatbackend-prex.onrender.com';
+
+// Toggle Emoji Picker Visibility
+let emojiPickerVisible = false;
+
+emojiButton.addEventListener('click', () => {
+  emojiPickerVisible = !emojiPickerVisible;
+
+  if (emojiPickerVisible) {
+    showEmojiPicker();
+  } else {
+    hideEmojiPicker();
+  }
+});
+
+// Function to Show Emoji Picker
+function showEmojiPicker() {
+  const emojiPicker = document.createElement('div');
+  emojiPicker.id = 'emoji-picker';
+  emojiPicker.style.position = 'absolute';
+  emojiPicker.style.bottom = '50px';
+  emojiPicker.style.right = '20px';
+  emojiPicker.style.display = 'grid';
+  emojiPicker.style.gridTemplateColumns = 'repeat(5, 1fr)';
+  emojiPicker.style.gridGap = '5px';
+  emojiPicker.style.backgroundColor = '#2c2c2c';
+  emojiPicker.style.padding = '10px';
+  emojiPicker.style.borderRadius = '8px';
+  emojiPicker.style.zIndex = '1000';
+
+  emojis.forEach(emoji => {
+    const emojiButton = document.createElement('button');
+    emojiButton.innerText = emoji;
+    emojiButton.style.fontSize = '20px';
+    emojiButton.style.backgroundColor = 'transparent';
+    emojiButton.style.border = 'none';
+    emojiButton.style.cursor = 'pointer';
+
+    emojiButton.addEventListener('click', () => {
+      insertEmoji(emoji);
+      hideEmojiPicker();
+    });
+
+    emojiPicker.appendChild(emojiButton);
+  });
+
+  document.body.appendChild(emojiPicker);
+}
+
+// Function to Insert Emoji into Input
+function insertEmoji(emoji) {
+  messageInput.value += emoji;
+  messageInput.focus();
+}
+
+// Function to Hide Emoji Picker
+function hideEmojiPicker() {
+  const emojiPicker = document.getElementById('emoji-picker');
+  if (emojiPicker) {
+    emojiPicker.remove();
+  }
+  emojiPickerVisible = false;
+}
 
 // Event Listener for Sending Messages
 sendButton.addEventListener('click', sendMessage);
