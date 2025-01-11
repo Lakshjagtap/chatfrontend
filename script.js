@@ -204,6 +204,6 @@ function loadChatHistory() {
     .catch((error) => {
       console.error('Error loading chat history:', error);
       hideBuffering();
-      displayMessage('Sorry, could not load previous chats.', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
+      displayMessage('Sorry, could not load previous chats. You can start new chat by typing "hello" or "selecting any emojis" or "asking for help(type "help")"', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
     });
 }
