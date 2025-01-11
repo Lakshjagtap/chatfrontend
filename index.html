@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat UI</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="chat-container">
         <header class="chat-header">
@@ -19,14 +21,19 @@
             <button id="emoji-button" aria-label="Add Emoji">😊</button>
             <button id="send-button" aria-label="Send message">Send</button>
         </footer>
-        
+
     </div>
-    <div id="loading-indicator">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>    
-      
+    <!-- Full-Screen Loading Overlay -->
+    <div id="loading-overlay">
+        <!-- Circular Buffering Spinner -->
+        <div id="buffer-spinner"></div>
+        <!-- Optional Text -->
+        <div id="buffer-text">Loading.....</div>
+    </div>
+
+
+
     <script src="script.js"></script>
 </body>
+
 </html>

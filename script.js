@@ -1,4 +1,4 @@
-// Emoji list for simplicity
+// Emoji List
 const emojis = ['😊', '😂', '😎', '😍', '🙄', '😭', '😢', '😡', '👍', '👏', '🙏', '🥺', '🤔', '💖'];
 
 // DOM Elements
@@ -6,7 +6,7 @@ const emojiButton = document.getElementById('emoji-button');
 const messageInput = document.getElementById('message-input');
 const chatMessages = document.querySelector('.chat-messages');
 const sendButton = document.getElementById('send-button');
-const loadingIndicator = document.getElementById('loading-indicator'); // Add this to your HTML
+const loadingIndicator = document.getElementById('loading-indicator'); // Ensure this is in your HTML
 
 // Backend URL (update with your Render URL)
 const API_URL = 'https://chatbackend-rvdq.onrender.com';
@@ -73,6 +73,46 @@ function hideEmojiPicker() {
   emojiPickerVisible = false;
 }
 
+// Show Buffering Spinner
+function showBuffering() {
+  document.getElementById('loading-overlay').style.display = 'flex';
+}
+
+// Hide Buffering Spinner
+function hideBuffering() {
+  document.getElementById('loading-overlay').style.display = 'none';
+}
+
+// Function to Simulate Typing Effect
+function simulateTypingEffect(text, sender, avatar) {
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('chat-message', sender);
+
+  const avatarElement = document.createElement('img');
+  avatarElement.src = avatar;
+  avatarElement.alt = `${sender} avatar`;
+  avatarElement.classList.add('avatar');
+
+  const textElement = document.createElement('span');
+  messageElement.appendChild(avatarElement);
+  messageElement.appendChild(textElement);
+
+  chatMessages.appendChild(messageElement);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  let charIndex = 0;
+
+  function typeCharacter() {
+    if (charIndex < text.length) {
+      textElement.textContent += text[charIndex];
+      charIndex++;
+      setTimeout(typeCharacter, 30); // Adjust typing speed here
+    }
+  }
+
+  typeCharacter();
+}
+
 // Event Listener for Sending Messages
 sendButton.addEventListener('click', sendMessage);
 
@@ -87,6 +127,9 @@ function sendMessage() {
   // Display the user's message
   displayMessage(message, 'user', 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png');
 
+  // Show buffering spinner
+  showBuffering();
+
   // Send the message to the backend
   fetch(`${API_URL}/chat`, {
     method: 'POST',
@@ -100,19 +143,21 @@ function sendMessage() {
       return response.json();
     })
     .then((data) => {
+      hideBuffering();
       if (data.botResponse) {
-        displayMessage(data.botResponse, 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
+        simulateTypingEffect(data.botResponse, 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
       }
     })
     .catch((error) => {
       console.error('Error:', error);
+      hideBuffering();
       displayMessage('Sorry, something went wrong!', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
     });
 
   messageInput.value = '';
 }
 
-// Function to Display a Message
+// Function to Display a Message (Without Typing Effect)
 function displayMessage(content, sender, avatar) {
   const messageElement = document.createElement('div');
   messageElement.classList.add('chat-message', sender);
@@ -135,10 +180,10 @@ function displayMessage(content, sender, avatar) {
 // Load chat history on page load
 document.addEventListener('DOMContentLoaded', loadChatHistory);
 
-// Function to load chat history from backend
+// Function to Load Chat History from Backend
 function loadChatHistory() {
-  // Show the loading indicator while fetching
-  loadingIndicator.style.display = 'block';
+  // Show loading indicator while fetching
+  showBuffering();
 
   fetch(`${API_URL}/chats`)
     .then((response) => {
@@ -148,21 +193,17 @@ function loadChatHistory() {
       return response.json();
     })
     .then((chats) => {
+      hideBuffering();
       chats.forEach((chat) => {
         const avatarUrl = chat.sender === 'user'
-          ? 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png' 
+          ? 'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png'
           : 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png';
         displayMessage(chat.message, chat.sender, avatarUrl);
       });
-
-      // Hide the loading indicator after loading chat history
-      loadingIndicator.style.display = 'none';
     })
     .catch((error) => {
       console.error('Error loading chat history:', error);
+      hideBuffering();
       displayMessage('Sorry, could not load previous chats.', 'bot', 'https://w7.pngwing.com/pngs/983/399/png-transparent-computer-icons-internet-bot-robot-robot-thumbnail.png');
-      
-      // Hide the loading indicator if an error occurs
-      loadingIndicator.style.display = 'none';
     });
 }
