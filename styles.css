@@ -123,28 +123,39 @@ body {
     flex-wrap: wrap;
 }
 
-/* Loading Indicator */
+/* Full-Screen Overlay */
+#loading-overlay {
+    position: fixed; /* Position it relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it appears on top of everything */
+}
+
+/* Loading Indicator (Dots) */
 #loading-indicator {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
     font-size: 1.2rem;
     color: #00ffff;
     animation: fadeInLoading 1s ease-in-out infinite;
 }
 
-/* Spinning Dots */
 #loading-indicator .dot {
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
     background-color: #00ffff;
     border-radius: 50%;
     animation: bounce 1.5s infinite ease-in-out;
 }
 
-/* Different Animation Delays for Each Dot */
 #loading-indicator .dot:nth-child(1) {
     animation-delay: 0s;
 }
@@ -167,7 +178,7 @@ body {
     }
 }
 
-/* Fade-in Animation for the Loading Text */
+/* Fade-in Animation for the Overlay */
 @keyframes fadeInLoading {
     from {
         opacity: 0;
