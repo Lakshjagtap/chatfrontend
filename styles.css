@@ -315,7 +315,7 @@ body {
 /* For Small Screens (Phones) */
 @media (max-width: 480px) {
     .chat-container {
-        width: 100%;
+        width: 95%;
         border-radius: 20px; /* Ensure curved corners remain on mobile */
     }
 
